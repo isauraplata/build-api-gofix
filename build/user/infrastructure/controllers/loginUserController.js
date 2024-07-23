@@ -34,12 +34,15 @@ class LoginController {
                 const verifiedPassword = yield bcrypt_1.default.compare(req.body.password, password);
                 if (!verifiedPassword)
                     return res.status(401).json({ error: true, message: "Invalid password" });
+                console.log("Imprimiendo accessToken: ");
                 //generate access and token
                 const { accessToken } = yield (0, generateToke_1.default)(userFind);
                 res.status(200).json({
                     error: false,
                     accessToken,
-                    message: "Logged in successfully"
+                    message: "Logged in successfully",
+                    id_user: userFind.id,
+                    is_mechanic: userFind.is_mechanic
                 });
             }
             catch (error) {

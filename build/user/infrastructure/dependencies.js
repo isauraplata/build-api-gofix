@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUsersController = exports.updateUserUseCase = exports.deleteUsersController = exports.deleteUserUseCase = exports.loginUsersController = exports.loginUserUseCase = exports.getAllUsersController = exports.getAllUserUseCase = exports.registerUserController = exports.registerUserUseCase = void 0;
+exports.getUsersController = exports.getUserUseCase = exports.updateUsersController = exports.updateUserUseCase = exports.deleteUsersController = exports.deleteUserUseCase = exports.loginUsersController = exports.loginUserUseCase = exports.getAllUsersController = exports.getAllUserUseCase = exports.registerUserController = exports.registerUserUseCase = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const MysqUserlRepository_1 = require("./MysqUserlRepository");
 const registerUserUseCase_1 = require("../application/registerUserUseCase");
@@ -16,6 +16,8 @@ const deleteUserController_1 = require("./controllers/deleteUserController");
 const deleteUserUseCase_1 = require("../application/deleteUserUseCase");
 const updateUserUseCase_1 = require("../application/updateUserUseCase");
 const updateUserController_1 = require("./controllers/updateUserController");
+const getUserUseCase_1 = require("../application/getUserUseCase");
+const getUserController_1 = require("./controllers/getUserController");
 dotenv_1.default.config();
 const mysqlUserRepository = new MysqUserlRepository_1.MysqlUserRepository();
 exports.registerUserUseCase = new registerUserUseCase_1.RegisterUser(mysqlUserRepository);
@@ -28,3 +30,5 @@ exports.deleteUserUseCase = new deleteUserUseCase_1.DeleteUser(mysqlUserReposito
 exports.deleteUsersController = new deleteUserController_1.DeleteUserController(exports.deleteUserUseCase);
 exports.updateUserUseCase = new updateUserUseCase_1.UpdateUser(mysqlUserRepository);
 exports.updateUsersController = new updateUserController_1.UpdateUserController(exports.updateUserUseCase);
+exports.getUserUseCase = new getUserUseCase_1.GetUser(mysqlUserRepository);
+exports.getUsersController = new getUserController_1.GetUsersController(exports.getUserUseCase);

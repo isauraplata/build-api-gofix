@@ -25,25 +25,21 @@ class MysqlUserRepository {
             }
         });
     }
-    getUser(email) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const sql = "SELECT * FROM users WHERE email = ?";
-            const params = [email];
-            try {
-                const [results] = yield (0, mysql_1.query)(sql, params);
-                if (results.length > 0) {
-                    const user = results[0];
-                    return new userModel_1.User(user.id, user.name, user.email, user.phone, user.password, user.is_mechanic);
-                }
-                else {
-                    return null;
-                }
-            }
-            catch (error) {
-                throw new Error(`Error obtaining user: ${error}`);
-            }
-        });
-    }
+    // async getUser(email: string): Promise<User | null> {
+    //   const sql = "SELECT * FROM users WHERE email = ?";
+    //   const params: any[] = [email];
+    //   try {
+    //     const [results]: any = await query(sql, params);
+    //     if (results.length > 0) {
+    //       const user = results[0];
+    //       return new User(user.id, user.name, user.email, user.phone, user.password, user.is_mechanic);
+    //     } else {
+    //       return null;
+    //     }
+    //   } catch (error) {
+    //     throw new Error(`Error obtaining user: ${error}`);
+    //   }
+    // }
     deleteUser(id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("id: " + id);
@@ -77,7 +73,7 @@ class MysqlUserRepository {
                 const [result] = yield (0, mysql_1.query)(sql, params);
                 if (result.affectedRows > 0) {
                     // Primero obtenemos el usuario para obtener el valor de is_mechanic
-                    const updatedUser = yield this.getUserById(id);
+                    const updatedUser = yield this.getUserByID(id);
                     return updatedUser;
                 }
                 else {
@@ -89,7 +85,27 @@ class MysqlUserRepository {
             }
         });
     }
-    getUserById(id) {
+    getUser(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = "SELECT * FROM users WHERE id = ?";
+            const params = [id];
+            try {
+                const [results] = yield (0, mysql_1.query)(sql, params);
+                console.log("results: ", results);
+                if (results.length > 0) {
+                    const user = results[0];
+                    return new userModel_1.User(user.id, user.name, user.email, user.phone, user.password, user.is_mechanic);
+                }
+                else {
+                    return null;
+                }
+            }
+            catch (error) {
+                throw new Error(`Error obtaining user by ID: ${error}`);
+            }
+        });
+    }
+    getUserByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = "SELECT * FROM users WHERE id = ?";
             const params = [id];
